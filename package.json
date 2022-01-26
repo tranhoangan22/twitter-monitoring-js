@@ -10,8 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "franc": "^5.0.0",
-    "node-notifier": "^7.0.0",
-    "open": "^7.0.3",
+    "node-notifier": "^7.0.2",
+    "open": "^7.4.2",
     "twit": "^2.2.11"
   }
 }
