@@ -24,15 +24,18 @@ var T = new Twit({
   //   { q: "#tesla since:2022-01-25", count: 100 },
   //   function (err, data, response) {
   //     // const tweets = data.statuses;
+
   //     // const tweets = data.statuses.map(
   //     //   (tweet) => `LANG: ${franc(tweet.text)} : ${tweet.text}`
   //     // ); //CHECK LANGUAGE
+
   //     const tweets = data.statuses
   //       .map((tweet) => `LANG: ${franc(tweet.text)} : ${tweet.text}`)
   //       .filter((tweet) => tweet.toLowerCase().includes("elon"));
   //     console.log(tweets);
   //   }
   // );
+
   /**
    *  2. REAL TIME MONITORING USING STREAM (HASHTAG)
    */
@@ -42,22 +45,26 @@ var T = new Twit({
   //   console.log("Language: " + franc(tweet.text));
   //   console.log("------");
   // });
+
   /**
    * 3. REAL TIME MONITORING USING STREAM (LOCATION)
    */
-  // var sanFrancisco = ["-122.75", "36.8", "-121.75", "37.8"];
+  var sanFrancisco = ["-122.75", "36.8", "-121.75", "37.8"];
+
   // var stream = T.stream("statuses/filter", { locations: sanFrancisco });
-  // //SHOW NOTIFICATION FOR EACH RECEIVED TWEET
-  // stream.on("tweet", function (tweet) {
-  //   console.log(tweet.text);
-  //   let url = `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`;
-  //   notifier.notify({
-  //     title: tweet.user.name,
-  //     message: tweet.text,
-  //   });
-  //   notifier.on("click", async function (notifierObject, options, event) {
-  //     console.log("clicked");
-  //     await open(url);
-  //   });
-  // });
+  var stream = T.stream("statuses/filter", { track: "msft" });
+
+  // show notification for each received tweet
+  stream.on("tweet", function (tweet) {
+    console.log(tweet.text);
+    let url = `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`;
+    notifier.notify({
+      title: tweet.user.name,
+      message: tweet.text,
+    });
+    notifier.on("click", async function (notifierObject, options, event) {
+      console.log("clicked");
+      await open(url);
+    });
+  });
 })();
